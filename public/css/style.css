@@ -943,6 +943,7 @@ button {
   .nav.open {
     display: flex;
     animation: fade-in 0.3s ease;
+    height: 30vh    ;
   }
 
   .nav a {
