@@ -82,78 +82,60 @@ mongoose
   .catch((err) => console.error(err));
 
 app.listen(port, () => {
-  console.log(`🚀 Server running on port ${port}...`);
+  console.log(`http://localhost:${port}`);
 });
 //--------------------------------------------------------------------------------------------
 // =================================== The Routes ============================================
 //--------------------------------------------------------------------------------------------
 // ✅ Middleware لتمرير Stripe key لكل الصفحات
-
+// Ignore .well-known requests
 app.get('/.well-known/*', (req, res) => res.status(204).end());
 
+// Routes
 app.use('/api/v1/product', productRouter);
 app.use('/api/v1/offer', offerRouter);
 app.use('/api/v1/order', orderRouter);
 app.use('/api/v1/review', reviewRouter);
 app.use('/', viewRouter);
 app.use('/admin', adminRouter);
-import globalErrorHandler from './utils/errorHandler.js';
 
-// ... كل الـ routes
-
-app.use(globalErrorHandler);
-app.use((err, req, res, next) => {
-  err.statusCode = err.statusCode || 500;
-  err.status = err.status || 'error';
-
-  // For rendered pages
-  if (req.originalUrl.startsWith('/')) {
-    return res.status(err.statusCode).render('error', {
-      title: 'Something went wrong!',
-      message: err.message,
-      error: err,
-    });
-  }
-
-  // For API routes
-  res.status(err.statusCode).json({
-    status: err.status,
-    message: err.message,
-  });
-});
-
-// 404 handler للـ routes اللي مش موجودة
+// 404 handler
 app.all('*', (req, res, next) => {
-  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+  const err = new Error('Page Not Found');
+  err.statusCode = 404;
+  next(err);
 });
 
-app.use(globalErrorHandler);
-// Global error handler (في الآخر!)
+// ✅ ONE Global Error Handler فقط
 app.use((err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
-  err.status = err.status || 'error';
 
+  // API → JSON
   if (req.originalUrl.startsWith('/api')) {
     return res.status(err.statusCode).json({
-      status: err.status,
+      status: 'error',
       message: err.message,
     });
   }
 
-  // عرض صفحة error
+  // Views → render page
   res.status(err.statusCode).render('error', {
     title: 'Something went wrong!',
-    msg: err.message,
+    message: err.message,
+    error: err,
   });
 });
 
 //----------------------------------------------------------------------------------------------------------
+
+// Handle unhandled promise rejections
 process.on('unhandledRejection', (err) => {
   console.log('❌ Unhandled Rejection 💥 Shutting down...');
   console.log(err.name, err.message);
   process.exit(1);
 });
 
+// Handle uncaught exceptions
 process.on('uncaughtException', (err) => {
   console.log('❌ Uncaught Exception 💥 Shutting down...');
   console.log(err.name, err.message);

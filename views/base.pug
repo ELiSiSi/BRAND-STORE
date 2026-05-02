@@ -88,19 +88,9 @@ html(lang="ar" dir="rtl")
       .container
         .nav-wrapper
 
-          .logo(itemscope itemtype="https://schema.org/Organization")
-            a(href="/" itemprop="url" aria-label="AR Tek - Home")
-              .logo-mark
-                span.logo-tek TEK
-                span.logo-ar AR
-              .logo-line(aria-hidden="true")
-              .logo-img
-                img(src="/img/logo.png" alt="AR Tek Logo" itemprop="logo" width="50" height="40")
 
           nav.nav(role="navigation" aria-label="القائمة الرئيسية / Main Navigation")
-            a(href="/home" class=(title === 'Home' ? 'active' : ''))
-              span.nav-ar الرئيسية
-              span.nav-en Home
+
             a(href="/products" class=(title === 'Products' ? 'active' : ''))
               span.nav-ar المنتجات
               span.nav-en Products
@@ -108,6 +98,15 @@ html(lang="ar" dir="rtl")
               span.nav-ar العروض
               span.nav-en Offers
 
+          .logo(itemscope itemtype="https://schema.org/Organization")
+            a(href="/" itemprop="url" aria-label="AR Tek - Home")
+              .logo-line2(aria-hidden="true")
+              .logo-mark
+                span.logo-tek  store
+                span.logo-ar asser
+              .logo-line(aria-hidden="true")
+              //- .logo-img
+              //-   img(src="/img/logo.png" alt="AR Tek Logo" itemprop="logo" width="50" height="40")
 
           .nav-actions
             a.cart-link(href="/cart" class=(title === 'Cart' ? 'active' : '') aria-label="سلة التسوق / Cart")
@@ -132,22 +131,20 @@ html(lang="ar" dir="rtl")
         .footer-top
           .footer-brand
             .footer-logo-mark
-              span.logo-tek TEK
-              span.logo-ar AR
+              span.logo-tek  S
+              span.logo-ar A
             p.footer-tagline
-              span تقنية بلا حدود
-              span.en Technology Without Limits
-
+              span هدايا بتوصل مشاعر
+              span.en Gifts that Deliver Feelings
           .footer-grid
             .footer-col
               h4
                 span روابط سريعة
                 span.en Quick Links
               nav(aria-label="روابط الفوتر")
-                a(href="/") الرئيسية / Home
                 a(href="/products") المنتجات / Products
-                if typeof offers !== 'undefined' && offers.length > 0
-                  a(href="/offers") العروض / Offers
+
+                a(href="/offers") العروض / Offers
                 a(href="/cart") السلة / Cart
 
             .footer-col
@@ -166,10 +163,10 @@ html(lang="ar" dir="rtl")
                 span تواصل معنا
                 span.en Contact Us
               .footer-contact-items
-                a(href="tel:+201234567890" aria-label="اتصل بنا")
+                a(href="tel:+201559508444" aria-label="اتصل بنا")
                   .contact-icon ☎
                   .contact-text
-                    span 01063 777 925
+                    span 015 59508 444
                 //- a(href="mailto:info@artek.com" aria-label="راسلنا")
                 //-   .contact-icon @
                 //-   .contact-text
@@ -184,7 +181,7 @@ html(lang="ar" dir="rtl")
                 //-     span AR Tek Official
 
         .footer-bottom
-          p © 2026 AR Tek. All rights reserved. | جميع الحقوق محفوظة.
+          p © 2026 asser store. All rights reserved. | جميع الحقوق محفوظة.
           .footer-badge EGYPT · EST. 2024
 
     //- Scripts

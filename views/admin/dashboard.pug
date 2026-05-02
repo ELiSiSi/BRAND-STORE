@@ -3,6 +3,7 @@ extends base
 block content
   - const safeStats = (typeof stats === 'object' && stats) ? stats : {}
 
+
   .stats-grid
     .stat-card
       .stat-icon
@@ -38,23 +39,22 @@ block content
 
   // ================= QUICK ACTIONS =================
   .quick-grid
-    a.quick-card(href="/admin/orders")
+    a.quick-card(href=`/admin/orders/${link}`)
       i.fa-solid.fa-basket-shopping
       h3 إدارة الطلبات
       p عرض وتعديل حالة الطلبات
 
-    a.quick-card(href="/admin/products")
+    a.quick-card(href=`/admin/products/${link}`)
       i.fa-solid.fa-box
       h3 إدارة المنتجات
       p إضافة وتعديل المنتجات
 
-    a.quick-card(href="/admin/offers")
+    a.quick-card(href=`/admin/offers/${link}`)
       i.fa-solid.fa-tags
       h3 إدارة العروض
       p إنشاء وإدارة الخصومات
 
-    a.quick-card(href="/admin/cashier/orders")
+    a.quick-card(href=`/admin/cashier/${link2}`)
       i.fa-solid.fa-cash-register
       h3 الكاشير
       p تنفيذ الطلبات بدون حذف
-

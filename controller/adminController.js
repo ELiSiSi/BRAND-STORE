@@ -25,12 +25,15 @@ export const adminPage = async (req, res, next) => {
       doneOrders,
       totalRevenue: totalRevenueResult[0]?.total || 0,
     };
-
+   const link = process.env.ADMIN_PASSWORD || 'default'
+   const link2 = process.env.CASHIER_PASSWORD || 'default'
     res.render('admin/dashboard', {
       title: 'Dashboard',
       pageTitle: 'لوحة الإدارة',
       page: 'dashboard',
       stats,
+      link,
+      link2,
       // optionally: recentOrders, lowStockProducts, etc.
     });
   } catch (err) {
