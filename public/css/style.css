@@ -7,11 +7,11 @@
 /* ─── CSS CUSTOM PROPERTIES ─────────────────── */
 :root {
   /* Brand Colors — Red & Gold Gift Theme */
-  --color-primary:     #E8253A;   /* Crimson Red  (was teal)      */
-  --color-secondary:   #C41230;   /* Deep Red     (was cyan-blue)  */
-  --color-deep:        #8B0000;   /* Dark Crimson (was deep teal)  */
-  --color-light:       #FF6B7A;   /* Soft Rose    (was light teal) */
-  --color-gold:        #D4AF37;   /* Warm Gold    (accent)         */
+  --color-primary:     #F3DC4E;   /* Crimson Red  (was teal)      */
+  --color-secondary:   #eacb05;   /* Deep Red     (was cyan-blue)  */
+  --color-deep:        #8b8400;   /* Dark Crimson (was deep teal)  */
+  --color-light:       #fffa6b;   /* Soft Rose    (was light teal) */
+  --color-gold:        #c3a906;   /* Warm Gold    (accent)         */
 
   /* Neutral Palette */
   --color-black:       #050505;
