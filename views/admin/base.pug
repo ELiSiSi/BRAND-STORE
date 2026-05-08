@@ -1,190 +1,76 @@
 doctype html
 html(lang="ar" dir="rtl")
   head
-    //- Basic Meta Tags
     meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    meta(http-equiv="X-UA-Compatible" content="IE=edge")
 
-    //- SEO Meta Tags
-    title= pageTitle || 'AR Tek | تقنية بلا حدود'
-    meta(name="description" content=pageDescription || 'AR Tek - متخصصون في أحدث الإلكترونيات الشخصية: سماعات، ساعات ذكية، ماكينات حلاقة وتصفيف. اختبر التقنية من منظور مختلف.')
-    meta(name="keywords" content="AR Tek, إلكترونيات, سماعات, ساعات ذكية, ماكينة حلاقة, تصفيف الشعر, إكسسوارات تقنية, شالش, مصر, electronics, smartwatch, headphones, grooming")
-    meta(name="author" content="AR Tek")
-    meta(name="robots" content="index, follow")
-    meta(name="language" content="ar, en")
-    meta(name="revisit-after" content="7 days")
-    meta(name="theme-color" content="#1A6886")
+    title= pageTitle ? pageTitle + ' | لوحة الإدارة' : 'لوحة الإدارة'
 
-    //- Open Graph Meta Tags
-    meta(property="og:type" content="website")
-    meta(property="og:title" content=pageTitle || 'AR Tek | تقنية بلا حدود')
-    meta(property="og:description" content=pageDescription || 'إلكترونيات شخصية بمستوى عالمي. اكتشف الآن.')
-    meta(property="og:image" content="/img/logo.png")
-    meta(property="og:url" content="https://artek.com")
-    meta(property="og:site_name" content="AR Tek")
-    meta(property="og:locale" content="ar_EG")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css")
+    link(rel="stylesheet" href="/css/admin.css")
 
-    //- Twitter Card
-    meta(name="twitter:card" content="summary_large_image")
-    meta(name="twitter:title" content=pageTitle || 'AR Tek - تقنية بلا حدود')
-    meta(name="twitter:description" content=pageDescription || 'إلكترونيات شخصية بمستوى عالمي')
-    meta(name="twitter:image" content="/img/logo.png")
-
-    //- Canonical URL
-    link(rel="canonical" href=canonicalUrl || 'https://artek.com')
-
-    //- Favicon
-    link(rel="icon" type="image/png" href="/img/logo.jpeg")
-    link(rel="apple-touch-icon" href="/img/logo.png")
-
-    //- Stylesheets
-    link(rel="stylesheet" href="/css/style.css")
-
-    //- Google Fonts
-    link(rel="preconnect" href="https://fonts.googleapis.com")
-    link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
-    link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700;900&family=Barlow+Condensed:wght@400;600;700;800&display=swap")
-
-    //- Schema.org Structured Data
-    script(type="application/ld+json").
-      {
-        "@context": "https://schema.org",
-        "@type": "Store",
-        "name": "AR Tek",
-        "image": "/img/logo.png",
-        "description": "متخصصون في أحدث الإلكترونيات الشخصية والإكسسوارات التقنية",
-        "address": {
-          "@type": "PostalAddress",
-          "addressCountry": "EG"
-        },
-        "email": "info@artek.com",
-        "hasOfferCatalog": {
-          "@type": "OfferCatalog",
-          "name": "منتجات AR Tek",
-          "itemListElement": [
-            { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "سماعات" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "ساعات ذكية" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "أجهزة حلاقة وتصفيف" } }
-          ]
-        },
-        "url": "https://artek.com",
-        "sameAs": [
-          "https://facebook.com/artek",
-          "https://instagram.com/artek"
-        ]
-      }
+    block head
 
   body
-    //- Cursor follower
-    .cursor-dot(aria-hidden="true")
-    .cursor-outline(aria-hidden="true")
+    // ================= HEADER =================
+    header.admin-header
+      .admin-header-inner
 
-    //- Noise overlay
-    .noise-overlay(aria-hidden="true")
+        a.admin-logo(href=`/admin/dashboard/${process.env.ADMIN_PASSWORD}`)
+          i.fa-solid.fa-shield-halved
+          span لوحة الإدارة
 
-    //- Header
-    header.header(role="banner")
-      .container
-        .nav-wrapper
+        .admin-header-actions
+          if currentAdmin
+            .admin-user
+              i.fa-solid.fa-user
+              span= currentAdmin.name || 'Admin'
+
+          a.icon-btn(href="/" title="الموقع")
+            i.fa-solid.fa-house
 
 
-          nav.nav(role="navigation" aria-label="القائمة الرئيسية / Main Navigation")
+    // ================= LAYOUT =================
+    .admin-layout
 
-            a(href="/products" class=(title === 'Products' ? 'active' : ''))
-              span.nav-ar المنتجات
-              span.nav-en Products
-            a(href="/offers" class=(title === 'Offers' ? 'active' : ''))
-              span.nav-ar العروض
-              span.nav-en Offers
+      // ===== SIDEBAR =====
+      aside.admin-sidebar
+        nav
+          -const link= process.env.ADMIN_PASSWORD
+          a(class=page === 'dashboard' ? 'active' : '', href=`/admin/dashboard/${link}`)
+            i.fa-solid.fa-chart-line
+            span الرئيسية
 
-          .logo(itemscope itemtype="https://schema.org/Organization")
-            a(href="/" itemprop="url" aria-label="AR Tek - Home")
-              .logo-line2(aria-hidden="true")
-              .logo-mark
-                span.logo-tek  STORE
+          a(class=title === 'Orders' ? 'active' : '', href=`/admin/orders/${link}`)
+            i.fa-solid.fa-basket-shopping
+            span الطلبات
 
-                span.logo-ar BRAND
+          a(class=title === 'Products' ? 'active' : '', href=`/admin/products/${link}`)
+            i.fa-solid.fa-box
+            span المنتجات
 
-              .logo-line(aria-hidden="true")
-              //- .logo-img
-              //-   img(src="/img/logo.png" alt="AR Tek Logo" itemprop="logo" width="50" height="40")
+          a(class=title === 'Offers' ? 'active' : '', href=`/admin/offers/${link}`)
+            i.fa-solid.fa-tags
+            span العروض
 
-          .nav-actions
-            a.cart-link(href="/cart" class=(title === 'Cart' ? 'active' : '') aria-label="سلة التسوق / Cart")
-              svg(width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true")
-                path(d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z")
-                line(x1="3" y1="6" x2="21" y2="6")
-                path(d="M16 10a4 4 0 01-8 0")
-              span.cart-count(aria-live="polite") 0
-            button.menu-toggle(aria-label="القائمة / Menu" aria-expanded="false")
-              span
-              span
-              span
+          a(class=title === 'Pay' ? 'active' : '', href=`/admin/pay/${link}`)
+            i.fa-solid.fa-money-bill
+            span هل تم الدفع
+      // ===== MAIN =====
+      main.admin-main
 
-    //- Main Content
-    main.main-content(role="main")
-      block content
+        if pageTitle
+          .page-header
+            h1= pageTitle
+            if pageDescription
+              p= pageDescription
 
-    //- Footer
-    footer.footer(role="contentinfo" itemscope itemtype="https://schema.org/Organization")
-      .footer-glow(aria-hidden="true")
-      .container
-        .footer-top
-          .footer-brand
-            .footer-logo-mark
-              span.logo-tek  S
-              span.logo-ar B
-            p.footer-tagline
-              span تقنية بلا حدود
-              span.en Technology Without Limits
-          .footer-grid
-            .footer-col
-              h4
-                span روابط سريعة
-                span.en Quick Links
-              nav(aria-label="روابط الفوتر")
-                a(href="/products") المنتجات / Products
+        block pageActions
 
-                a(href="/offers") العروض / Offers
-                a(href="/cart") السلة / Cart
+        block content
 
-            .footer-col
-              h4
-                span الفئات
-                span.en Categories
-              nav(aria-label="فئات المنتجات")
-                if typeof products !== 'undefined' && products.length
-                  - const categories = [...new Set(products.map(p => p.category))]
-                  each cat in categories
-                    p.footer-link #{cat}
-                else
-                  p.footer-link لا توجد فئات
-            .footer-col
-              h4
-                span تواصل معنا
-                span.en Contact Us
-              .footer-contact-items
-                a(href="tel:+201557067005" aria-label="اتصل بنا")
-                  .contact-icon ☎
-                  .contact-text
-                    span 015 5706 7005
-                //- a(href="mailto:info@artek.com" aria-label="راسلنا")
-                //-   .contact-icon @
-                //-   .contact-text
-                //-     span info@artek.com
-                //- a(href="https://instagram.com/artek" target="_blank" rel="noopener noreferrer")
-                //-   .contact-icon ◈
-                //-   .contact-text
-                //-     span @artek.official
-                //- a(href="https://facebook.com/artek" target="_blank" rel="noopener noreferrer")
-                //-   .contact-icon ◉
-                //-   .contact-text
-                //-     span AR Tek Official
+    // ================= FOOTER =================
+    footer.admin-footer
+      p © 2026 جميع الحقوق محفوظة
 
-        .footer-bottom
-          p © 2026 asser store. All rights reserved. | جميع الحقوق محفوظة.
-          .footer-badge EGYPT · EST. 2024
-
-    //- Scripts
-    script(src="/js/script.js" defer)
+    block scripts
