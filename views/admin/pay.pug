@@ -358,7 +358,7 @@ html(lang="ar" dir="rtl")
   body
 
     .topbar
-      div 🧾 نظام الكاشير
+      div  لوحة إدارة الطلبات
       span.badge طلبات جديدة
 
     .grid
@@ -403,10 +403,10 @@ html(lang="ar" dir="rtl")
             span #{order.total || 0} ج.م
 
           .actions
-            form(method="post", action=`/api/v1/order/${order._id}/done`)
+            form(method="post", action=`/api/v1/order/${order._id}/paid`)
               button.done(type="submit")
                 i.fa-solid.fa-check
-                | تم الارسال
+                | تم الدفع
 
             button.print(type="button" onclick="openPrintModal(this)")
               i.fa-solid.fa-print

@@ -16,7 +16,7 @@ html(lang="ar" dir="rtl")
     header.admin-header
       .admin-header-inner
 
-        a.admin-logo(href="/admin")
+        a.admin-logo(href=`/admin/dashboard/${process.env.ADMIN_PASSWORD}`)
           i.fa-solid.fa-shield-halved
           span لوحة الإدارة
 
@@ -53,6 +53,9 @@ html(lang="ar" dir="rtl")
             i.fa-solid.fa-tags
             span العروض
 
+          a(class=title === 'Pay' ? 'active' : '', href=`/admin/pay/${link}`)
+            i.fa-solid.fa-money-bill
+            span هل تم الدفع
       // ===== MAIN =====
       main.admin-main
 

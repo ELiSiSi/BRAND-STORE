@@ -6,10 +6,11 @@ block pageActions
 
 block content
   - const safeOrders = Array.isArray(orders) ? orders : []
+  - const safeTotalPay = Array.isArray(totalpay) ? totalpay : []
 
   // ===================== CALCULATIONS =====================
   - const totalOrders = safeOrders.length
-  - const totalSales = safeOrders.reduce((sum, order) => sum + (order.total || 0), 0)
+  - const totalSales = safeTotalPay.reduce((sum, order) => sum + (order.total || 0), 0)
   - const pendingOrders = safeOrders.filter(o => o.status === 'pending').length
   - const avgOrder = totalOrders > 0 ? (totalSales / totalOrders) : 0
 
@@ -64,6 +65,7 @@ block content
               th رقم الطلب
               th العميل
               th الهاتف
+              th الحاله
               th الإجمالي
 
           tbody
@@ -72,10 +74,13 @@ block content
                 td= order.numberOrder || order._id
                 td= order.name || '---'
                 td= order.number || '---'
+                td
+                  if order.statusPayment === 'no'
+                    span.badge.badge-warning لم يتم الدفع
+                  else if order.statusPayment === 'paid'
+                    span.badge.badge-success تم الدفع
+
                 td= (order.total || 0) + ' ج.م'
-                //- td
-                //-       i.fa-solid.fa-check
-                //-       span تم الدفع
 
     else
       .empty-state

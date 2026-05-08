@@ -387,7 +387,6 @@ block scripts
         </button>
       `;
       row.querySelector('.remove-image-btn').addEventListener('click', () => {
-        // لا تحذف الـ row الأولى — بس امسح قيمتها
         const list = row.parentElement;
         if (list && list.children.length > 1) {
           row.remove();
@@ -471,27 +470,24 @@ block scripts
           body: JSON.stringify(data)
         });
 
+        // ✅ اقرأ الـ response الأول قبل أي حاجة
         let result = {};
-        if (res.ok) {
-            window.location.href = '/admin/products';
-            }
         try {
           const ct = res.headers.get('content-type') || '';
           if (ct.includes('application/json')) result = await res.json();
         } catch (_) {}
 
+        // ✅ لو في error ارمي exception
         if (!res.ok) {
           throw new Error(result.message || result.error || `خطأ ${res.status}: فشل في إضافة المنتج`);
         }
 
-        addProductToTable(result.data || result);
-        closeModal('addModal');
-        e.target.reset();
+        // ✅ الـ redirect بعد ما كل حاجة تمام
+        window.location.href = window.location.pathname;
 
       } catch (err) {
         showFieldError('addName', err.message);
         showErrorToast(err.message);
-      } finally {
         btn.disabled = false;
         loading.classList.add('hidden');
         btnText.textContent = 'إضافة المنتج';
@@ -592,30 +588,27 @@ block scripts
         const res = await fetch(`${API_BASE}/${id}`, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-          path: 'update-product'
+          body: JSON.stringify(data)
         });
 
+        // ✅ اقرأ الـ response الأول قبل أي حاجة
         let result = {};
-        if (res.ok) {
-            window.location.href = '/admin/products';
-            }
         try {
           const ct = res.headers.get('content-type') || '';
           if (ct.includes('application/json')) result = await res.json();
         } catch (_) {}
 
+        // ✅ لو في error ارمي exception
         if (!res.ok) {
           throw new Error(result.message || result.error || `خطأ ${res.status}: فشل في تحديث المنتج`);
         }
 
-        updateProductInTable(id, result.data || result);
-        closeModal('editModal');
+        // ✅ الـ redirect بعد ما كل حاجة تمام
+        window.location.href = window.location.pathname;
 
       } catch (err) {
         showFieldError('editName', err.message);
         showErrorToast(err.message);
-      } finally {
         btn.disabled = false;
         loading.classList.add('hidden');
         btnText.textContent = 'حفظ التعديلات';

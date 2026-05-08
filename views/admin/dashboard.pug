@@ -3,8 +3,8 @@ extends base
 block content
   - const safeStats = (typeof stats === 'object' && stats) ? stats : {}
 
-
   .stats-grid
+
     .stat-card
       .stat-icon
         i.fa-solid.fa-basket-shopping
@@ -17,17 +17,17 @@ block content
       .stat-icon
         i.fa-solid.fa-clock
       .stat-content
-        span.stat-label الطلبات قيد الانتظار
+        span.stat-label الطلبات غير المدفوعة
         strong.stat-value= safeStats.pendingOrders || 0
-        small.stat-hint لم يتم تنفيذها بعد
+        small.stat-hint لم يتم الدفع بعد
 
     .stat-card
       .stat-icon
         i.fa-solid.fa-circle-check
       .stat-content
-        span.stat-label الطلبات المكتملة
+        span.stat-label الطلبات المدفوعة
         strong.stat-value= safeStats.doneOrders || 0
-        small.stat-hint تم تسليمها بنجاح
+        small.stat-hint تم الدفع بنجاح
 
     .stat-card
       .stat-icon
@@ -35,10 +35,11 @@ block content
       .stat-content
         span.stat-label إجمالي الإيرادات
         strong.stat-value= (safeStats.totalRevenue || 0) + ' ج.م'
-        small.stat-hint من الطلبات المكتملة
+        small.stat-hint من الطلبات المدفوعة
 
   // ================= QUICK ACTIONS =================
   .quick-grid
+
     a.quick-card(href=`/admin/orders/${link}`)
       i.fa-solid.fa-basket-shopping
       h3 إدارة الطلبات
@@ -54,7 +55,17 @@ block content
       h3 إدارة العروض
       p إنشاء وإدارة الخصومات
 
-    a.quick-card(href=`/admin/cashier/${link2}`)
+    a.quick-card(href=`/admin/cashier/${link}`)
       i.fa-solid.fa-cash-register
       h3 الكاشير
       p تنفيذ الطلبات بدون حذف
+
+    a.quick-card(href=`/admin/pay/${link}`)
+      i.fa-solid.fa-money-bill
+      h3 إدارة الدفع
+      p إدارة المدفوعات
+
+    a.quick-card(href=`/admin/orders/${link}`)
+      i.fa-solid.fa-chart-line
+      h3 إدارة الطلبات
+      p عرض جميع  الطلبات

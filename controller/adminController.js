@@ -10,12 +10,24 @@ export const adminPage = async (req, res, next) => {
   try {
     const [totalOrders, pendingOrders, doneOrders, totalRevenueResult] =
       await Promise.all([
+        // إجمالي الطلبات
         Order.countDocuments(),
-        Order.countDocuments({ status: 'pending' }),
-        Order.countDocuments({ status: 'done' }),
+
+        // الطلبات غير المدفوعة
+        Order.countDocuments({ statusPayment: 'no' }),
+
+        // الطلبات المدفوعة
+        Order.countDocuments({ statusPayment: 'paid' }),
+
+        // إجمالي الأرباح من الطلبات المدفوعة فقط
         Order.aggregate([
-          { $match: { status: 'done' } },
-          { $group: { _id: null, total: { $sum: '$totalPrice' } } },
+          { $match: { statusPayment: 'paid' } },
+          {
+            $group: {
+              _id: null,
+              total: { $sum: '$total' },
+            },
+          },
         ]),
       ]);
 
@@ -25,8 +37,10 @@ export const adminPage = async (req, res, next) => {
       doneOrders,
       totalRevenue: totalRevenueResult[0]?.total || 0,
     };
-   const link = process.env.ADMIN_PASSWORD || 'default'
-   const link2 = process.env.CASHIER_PASSWORD || 'default'
+
+    const link = process.env.ADMIN_PASSWORD || 'default';
+    const link2 = process.env.CASHIER_PASSWORD || 'default';
+
     res.render('admin/dashboard', {
       title: 'Dashboard',
       pageTitle: 'لوحة الإدارة',
@@ -34,7 +48,6 @@ export const adminPage = async (req, res, next) => {
       stats,
       link,
       link2,
-      // optionally: recentOrders, lowStockProducts, etc.
     });
   } catch (err) {
     console.error('Error in adminPage:', err);
@@ -71,9 +84,12 @@ export const offerPage = async (req, res, next) => {
 export const orderPage = async (req, res, next) => {
   try {
     const orders = await Order.find({}).sort({ createdAt: -1 });
+    const totalpay = await Order.find({ statusPayment: 'paid' }).sort({ createdAt: -1 });
+
     res.status(200).render('admin/orders', {
       title: 'Orders',
       orders,
+      totalpay,
     });
   } catch (err) {
     return next(new AppError('Error fetching orders', 404));
@@ -89,6 +105,23 @@ export const cashierPage = async (req, res, next) => {
     });
     res.status(200).render('admin/cashier', {
       title: 'Cashier',
+      orders,
+    });
+  } catch (err) {
+    return next(new AppError('Error fetching orders', 404));
+  }
+};
+
+// pay Page -----------------------------------------------------------------------------------
+export const payPage = async (req, res, next) => {
+  try {
+const orders = await Order.find({
+  statusPayment: 'no',
+  status: 'done',
+});
+
+    res.status(200).render('admin/pay', {
+      title: 'pay',
       orders,
     });
   } catch (err) {

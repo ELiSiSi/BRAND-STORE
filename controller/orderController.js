@@ -20,13 +20,26 @@ export const markOrderAsDone = async (req, res, next) => {
       status: 'done',
     });
 
-    res.redirect('/admin/cashier');
+    res.redirect(`/admin/cashier/${process.env.ADMIN_PASSWORD}`);
   } catch (err) {
     console.error(err);
     return next(new AppError('Error updating order status', 500));
   }
 };
 
+// Mark Order As Paid -----------------------------------------------------------------------------------
+export const markOrderAsPaid = async (req, res, next) => {
+  try {
+    await Order.findByIdAndUpdate(req.params.id, {
+      statusPayment: 'paid',
+    });
+
+    res.redirect(`/admin/pay/${process.env.ADMIN_PASSWORD}`);
+  } catch (err) {
+    console.error(err);
+    return next(new AppError('Error updating order status', 500));
+  }
+};
 // Delete Order -----------------------------------------------------------------------------------
 export const deleteOrder = deleteOne(Order);
 

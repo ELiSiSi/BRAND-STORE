@@ -7,11 +7,11 @@
 /* ─── CSS CUSTOM PROPERTIES ─────────────────── */
 :root {
   /* Brand Colors — Red & Gold Gift Theme */
-  --color-primary:     #E8253A;   /* Crimson Red  (was teal)      */
-  --color-secondary:   #C41230;   /* Deep Red     (was cyan-blue)  */
-  --color-deep:        #8B0000;   /* Dark Crimson (was deep teal)  */
-  --color-light:       #FF6B7A;   /* Soft Rose    (was light teal) */
-  --color-gold:        #D4AF37;   /* Warm Gold    (accent)         */
+  --color-primary:     #F3DC4E;   /* Crimson Red  (was teal)      */
+  --color-secondary:   #eacb05;   /* Deep Red     (was cyan-blue)  */
+  --color-deep:        #8b8400;   /* Dark Crimson (was deep teal)  */
+  --color-light:       #fffa6b;   /* Soft Rose    (was light teal) */
+  --color-gold:        #c3a906;   /* Warm Gold    (accent)         */
 
   /* Neutral Palette */
   --color-black:       #050505;
@@ -19,27 +19,27 @@
   --color-surface:     #111111;
   --color-surface-2:   #161616;
   --color-surface-3:   #1C1C1C;
-  --color-border:      rgba(232, 37, 58, 0.12);
-  --color-border-glow: rgba(198, 9, 28, 0.522);
+  --color-border:      rgba(232, 203, 37, 0.12);
+  --color-border-glow: #e2c40767;
   --color-white:       #FFF8F8;
   --color-muted:       rgba(255, 248, 248, 0.48);
   --color-muted-2:     rgba(255, 248, 248, 0.26);
 
   /* Gradients */
-  --grad-primary:      linear-gradient(135deg, #E8253A, #C41230, #8B0000);
-  --grad-gold:         linear-gradient(135deg, #D4AF37, #B8962E, #96780A);
-  --grad-glow:         linear-gradient(135deg, rgba(232,37,58,0.14), rgba(196,18,48,0.05));
+  --grad-primary:      linear-gradient(135deg, #e2e825, #c4b812, #7d8b00);
+  --grad-gold:         linear-gradient(135deg, #d48b37, #b86e2e, #96780A);
+  --grad-glow:         linear-gradient(135deg, rgba(232, 206, 37, 0.14), rgba(196, 184, 18, 0.05));
   --grad-dark:         linear-gradient(180deg, #0A0A0A 0%, #050505 100%);
   --grad-surface:      linear-gradient(135deg, #111111, #161616);
   --grad-hero:         linear-gradient(135deg, #050505 0%, #111111 50%, #161616 100%);
 
   /* Glow Effects */
-  --glow-primary:      0 0 40px rgba(232, 37, 58, 0.28);
-  --glow-secondary:    0 0 60px rgba(196, 18, 48, 0.22);
-  --glow-deep:         0 0 80px rgba(139, 0, 0, 0.32);
-  --glow-intense:      0 0 120px rgba(232, 37, 58, 0.45);
+  --glow-primary:      0 0 40px rgba(229, 232, 37, 0.28);
+  --glow-secondary:    0 0 60px rgba(196, 196, 18, 0.22);
+  --glow-deep:         0 0 80px rgba(139, 130, 0, 0.32);
+  --glow-intense:      0 0 120px rgba(232, 226, 37, 0.45);
   --glow-gold:         0 0 30px rgba(212, 175, 55, 0.35);
-  --shadow-card:       0 8px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(232, 37, 58, 0.09);
+  --shadow-card:       0 8px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(232, 216, 37, 0.09);
 
   /* Typography */
   --font-display:      'Barlow Condensed', sans-serif;
@@ -149,7 +149,7 @@ button {
   position: fixed;
   width: 36px;
   height: 36px;
-  border: 1.5px solid rgba(232, 37, 58, 0.5);
+  border: 1.5px solid rgba(209, 232, 37, 0.5);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
@@ -696,7 +696,7 @@ button {
 }
 
 .btn-ghost {
-  background: rgba(232, 37, 58, 0.07);
+  background: rgba(232, 226, 37, 0.07);
   color: var(--color-white);
   border: 1px solid var(--color-border);
 }

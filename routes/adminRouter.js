@@ -9,6 +9,7 @@ import {
   cashierPage,
   offerPage,
   AllReviews,
+  payPage,
   orderPage,
 } from '../controller/adminController.js';
 
@@ -17,8 +18,10 @@ import {
 // ===============================
 
 // Cashier
-router.get(`/cashier/${process.env.CASHIER_PASSWORD}`, cashierPage);
+router.get(`/cashier/${process.env.ADMIN_PASSWORD}`, cashierPage);
 
+// pay link
+router.get(`/pay/${process.env.ADMIN_PASSWORD}`, payPage);
 // Products
 router.get(`/products/${process.env.ADMIN_PASSWORD}`, productPage);
 
