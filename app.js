@@ -76,10 +76,12 @@ console.log('VIEWS PATH 👉', app.get('views'));
 
 // تحميل أسرع للصفحات استهلاك إنترنت أقل
 app.use(compression());
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log('✅ Connected to MongoDB'))
-  .catch((err) => console.error(err));
+import { connectDB } from './utils/mongoose.js';
+
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
+});
 
 app.listen(port, () => {
   console.log(`http://localhost:${port}`);
