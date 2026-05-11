@@ -89,71 +89,66 @@ block content
               span.trust-icon ↩️
               span.trust-text إرجاع سهل
 
-            .product-share
-              span.share-label شارك المنتج:
-              .share-links
-                a.share-btn.whatsapp(
-                  href='#'
-                  data-platform='whatsapp'
-                  data-slug=item.slug
-                  data-name=item.name
-                  data-price=item.price
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  title='شارك عبر واتساب'
-                  aria-label='واتساب'
-                )
-                  i.fab.fa-whatsapp
-                  span واتساب
+          .product-share
+            span.share-label شارك المنتج:
+            .share-links
+              a.share-btn.whatsapp(
+                href='#'
+                data-platform='whatsapp'
+                data-slug=item.slug
+                data-name=item.name
+                data-price=item.price
+                target='_blank'
+                rel='noopener noreferrer'
+                title='شارك عبر واتساب'
+                aria-label='واتساب'
+              )
+                i.fab.fa-whatsapp
 
-                a.share-btn.facebook(
-                  href='#'
-                  data-platform='facebook'
-                  data-slug=item.slug
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  title='شارك عبر فيسبوك'
-                  aria-label='فيسبوك'
-                )
-                  i.fab.fa-facebook-f
-                  span فيسبوك
+              a.share-btn.facebook(
+                href='#'
+                data-platform='facebook'
+                data-slug=item.slug
+                target='_blank'
+                rel='noopener noreferrer'
+                title='شارك عبر فيسبوك'
+                aria-label='فيسبوك'
+              )
+                i.fab.fa-facebook-f
 
-                a.share-btn.twitter(
-                  href='#'
-                  data-platform='twitter'
-                  data-slug=item.slug
-                  data-name=item.name
-                  data-price=item.price
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  title='شارك عبر تويتر'
-                  aria-label='تويتر'
-                )
-                  i.fab.fa-x-twitter
-                  span تويتر
+              a.share-btn.twitter(
+                href='#'
+                data-platform='twitter'
+                data-slug=item.slug
+                data-name=item.name
+                data-price=item.price
+                target='_blank'
+                rel='noopener noreferrer'
+                title='شارك عبر تويتر'
+                aria-label='تويتر'
+              )
+                i.fab.fa-x-twitter
 
-                a.share-btn.telegram(
-                  href='#'
-                  data-platform='telegram'
-                  data-slug=item.slug
-                  data-name=item.name
-                  data-price=item.price
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  title='شارك عبر تيليجرام'
-                  aria-label='تيليجرام'
-                )
-                  i.fab.fa-telegram-plane
-                  span تيليجرام
+              a.share-btn.telegram(
+                href='#'
+                data-platform='telegram'
+                data-slug=item.slug
+                data-name=item.name
+                data-price=item.price
+                target='_blank'
+                rel='noopener noreferrer'
+                title='شارك عبر تيليجرام'
+                aria-label='تيليجرام'
+              )
+                i.fab.fa-telegram-plane
 
-                button.share-btn.copy-link(
-                  type='button'
-                  data-slug=item.slug
-                  title='نسخ رابط المنتج'
-                  aria-label='نسخ الرابط'
-                )
-                  i.far.fa-copy
-                  span نسخ الرابط
+              button.share-btn.copy-link(
+                type='button'
+                data-slug=item.slug
+                title='نسخ رابط المنتج'
+                aria-label='نسخ الرابط'
+              )
+                i.far.fa-copy
 
 
   // ── Toast Message ──
@@ -690,18 +685,18 @@ block content
     .product-share {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       flex-wrap: wrap;
-      padding: 16px;
+      padding: 14px 16px;
       background: #fff;
       border-radius: var(--radius-md);
       border: 1px solid var(--gray-200);
     }
 
     .share-label {
-      font-size: 14px;
-      color: var(--gray-600);
-      font-weight: 600;
+      font-size: 13px;
+      color: var(--gray-500);
+      font-weight: 500;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -709,37 +704,35 @@ block content
 
     .share-label::before {
       content: '🔗';
-      font-size: 16px;
+      font-size: 15px;
     }
 
     .share-links {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
     .share-btn {
-      display: inline-flex;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 10px 18px;
-      border-radius: var(--radius-md);
-      background: var(--gray-50);
+      justify-content: center;
       text-decoration: none;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--gray-700);
+      font-size: 18px;
       transition: all var(--transition-fast);
       border: 1px solid var(--gray-200);
       cursor: pointer;
+      background: var(--gray-50);
+      color: var(--gray-600);
+      flex-shrink: 0;
     }
 
     .share-btn i {
       font-size: 18px;
-    }
-
-    .share-btn span {
-      font-size: 13px;
+      line-height: 1;
     }
 
     .share-btn.whatsapp {
@@ -752,8 +745,8 @@ block content
       background: #25d366;
       color: #fff;
       border-color: #25d366;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+      transform: translateY(-3px) scale(1.1);
+      box-shadow: 0 6px 16px rgba(37, 211, 102, 0.35);
     }
 
     .share-btn.facebook {
@@ -766,8 +759,8 @@ block content
       background: #1877f2;
       color: #fff;
       border-color: #1877f2;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3);
+      transform: translateY(-3px) scale(1.1);
+      box-shadow: 0 6px 16px rgba(24, 119, 242, 0.35);
     }
 
     .share-btn.twitter {
@@ -780,8 +773,8 @@ block content
       background: #000;
       color: #fff;
       border-color: #000;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transform: translateY(-3px) scale(1.1);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
     }
 
     .share-btn.telegram {
@@ -794,8 +787,8 @@ block content
       background: #0088cc;
       color: #fff;
       border-color: #0088cc;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 136, 204, 0.3);
+      transform: translateY(-3px) scale(1.1);
+      box-shadow: 0 6px 16px rgba(0, 136, 204, 0.35);
     }
 
     .share-btn.copy-link {
@@ -808,57 +801,82 @@ block content
       background: var(--color-primary);
       color: #fff;
       border-color: var(--color-primary);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+      transform: translateY(-3px) scale(1.1);
+      box-shadow: 0 6px 16px rgba(245, 158, 11, 0.35);
     }
 
     .share-btn.copy-link.copied {
       background: var(--success);
       color: #fff;
       border-color: var(--success);
+      transform: translateY(-3px) scale(1.1);
+      box-shadow: 0 6px 16px rgba(34, 197, 94, 0.35);
     }
 
     @media (max-width: 768px) {
       .product-share {
-        flex-direction: column;
-        align-items: stretch;
         gap: 10px;
+        padding: 12px 14px;
       }
 
       .share-label {
-        justify-content: center;
+        font-size: 12px;
       }
 
       .share-links {
-        justify-content: center;
+        gap: 8px;
       }
 
       .share-btn {
-        padding: 8px 14px;
-        font-size: 13px;
+        width: 40px;
+        height: 40px;
       }
 
-      .share-btn span {
-        font-size: 12px;
+      .share-btn i {
+        font-size: 17px;
       }
     }
 
     @media (max-width: 480px) {
+      .product-share {
+        justify-content: center;
+        gap: 8px;
+        padding: 10px 12px;
+      }
+
+      .share-label {
+        width: 100%;
+        justify-content: center;
+        font-size: 11px;
+      }
+
       .share-links {
-        gap: 6px;
+        gap: 10px;
+        justify-content: center;
       }
 
       .share-btn {
-        padding: 6px 10px;
-        gap: 4px;
+        width: 46px;
+        height: 46px;
       }
 
       .share-btn i {
-        font-size: 14px;
+        font-size: 19px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .share-links {
+        gap: 8px;
       }
 
-      .share-btn span {
-        display: none;
+      .share-btn {
+        width: 42px;
+        height: 42px;
+      }
+
+      .share-btn i {
+        font-size: 17px;
       }
     }
 
