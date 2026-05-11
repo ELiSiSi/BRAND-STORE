@@ -2287,9 +2287,6 @@ button {
     align-items:center;
     justify-content:center;
     gap:12px;
-    margin-top: 100px;
-    margin-bottom: -40px;
-    padding-top: 80px;
     padding-bottom: 0px;
   }
 }
@@ -2513,9 +2510,9 @@ button {
 
 .filter-sort select {
   background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-light);
   border-radius: var(--r-md);
-  color: var(--color-muted);
+  color: #ffffff;
   font-family: var(--font-arabic);
   font-size: .75rem;
   padding: 7px 12px;
@@ -2529,7 +2526,7 @@ button {
   background-position: left 10px center;
   padding-left: 32px;
 }
-.filter-sort select:focus { border-color: var(--color-border-glow); }
+.filter-sort select:focus { border-color: var(--color-gold); }
 
 /* ─── MEGA OFFER ─────────────────────────────── */
 .mega-offer-section { background: var(--color-dark); }
@@ -3948,4 +3945,9 @@ button {
 .add-to-cart.added {
   background: #10b981 !important;
   border-color: #10b981 !important;
+}
+.product-card-body {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }

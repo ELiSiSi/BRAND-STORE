@@ -2,43 +2,74 @@ extends base
 
 block content
 
-
   //════════════════════════════════════
   // HERO
   //════════════════════════════════════
   section.products-hero
     .container
       .products-hero-inner
-        span.section-label asser store · Products
-        h1.section-title اكتشف أحدث المنتجات
+
+
+
+  .offers-filter-bar
+    .container
+      .filter-inner
+
+        .filter-tabs
+          .section-header(data-reveal)
+            span.section-label
+              i.fa-solid.fa-store
+              |   كل المنتجات · Products
+            h2.section-title
+              |  اكتشف أحدث المنتجات
+
+            p.section-subtitle تسوق أفضل المنتجات بأفضل الأسعار مع أحدث العروض والخصومات.
 
         .filter-sort
-          label.sr-only(for="sort-select") ترتيب حسب
-          select#sort-select
-            option(value="price-asc") الأقل سعراً
-            option(value="price-desc") الأعلى سعراً
-            option(value="newest") الأحدث
-
+            select#sort-select
+              option(value="price-asc") الأقل سعراً
+              option(value="price-desc") الأعلى سعراً
+              option(value="newest") الأحدث
   //════════════════════════════════════
   // FILTERS
   //════════════════════════════════════
   section.section
     .container
+
+      .filters-header
+        h2
+          i.fa-solid.fa-filter
+          |  تصفية المنتجات
+
       .filters-scroll
-        button.filter-btn.active(type="button" data-filter="all") كل المنتجات
+
+        button.filter-btn.active(
+          type="button"
+          data-filter="all"
+        )
+          i.fa-solid.fa-layer-group
+          |  كل المنتجات
 
         - const categories = [...new Set(products.map(p => p.category))]
+
         each cat in categories
-          button.filter-btn(type="button" data-filter=cat)= cat
+          button.filter-btn(
+            type="button"
+            data-filter=cat
+          )
+
+            |  #{cat}
 
   //════════════════════════════════════
   // PRODUCTS GRID
   //════════════════════════════════════
   section.section
     .container
+
       .products-grid
 
         each product in products
+
           .product-card(
             data-category=product.category
             data-price=product.price
@@ -46,29 +77,44 @@ block content
             data-date=product.createdAt
           )
 
+            // IMAGE
             a.product-card-img(href=`/products/${product.slug}`)
-              img(src=product.image alt=product.name)
+
+              img(
+                src=product.image
+                alt=product.name
+                loading="lazy"
+              )
+
+              .product-overlay
+                span
+                  i.fa-solid.fa-eye
+                  |  مشاهدة المنتج
 
               .product-badges
-                if product.isNew
-                  span.tag.tag-new جديد
-                if product.discount
-                  span.tag.tag-sale خصم
 
+
+            // BODY
             .product-card-body
-              span.product-cat #{product.category}
+
+              .product-top
+                span.product-cat
+                  i.fa-solid.fa-folder
+                  |  #{product.category}
 
               h3.product-name
-                a(href=`/products/${product.slug}`) #{product.name}
+                a(href=`/products/${product.slug}`)
+                  = product.name
 
-              p.product-name-en #{product.name_en}
 
               .product-price-row
-                span.product-price #{product.price} جنيه
-                if product.oldPrice
-                  span.product-price-old #{product.oldPrice}
+
+                span.product-price
+                  i.fa-solid.fa-money-bill-wave
+                  |  #{product.price} جنيه
 
               .product-actions
+
                 button.btn.btn-primary.add-to-cart(
                   type="button"
                   data-id=product._id
@@ -77,88 +123,170 @@ block content
                   data-image=product.image
                   data-category=product.category
                 )
-                  | إضافة للسلة
+                  i.fa-solid.fa-cart-plus
+                  |  إضافة للسلة
 
+                a.btn.btn-outline(
+                  href=`/products/${product.slug}`
+                )
+                  i.fa-solid.fa-eye
+                  |  التفاصيل
 
-  section.section
-    .container
-      .newsletter-box
-        h2 عروض حصرية يوميًا
-        p تابع أحدث المنتجات والعروض
-
-  // ✅ Toast Notification (بدل الـ Alert)
+  //════════════════════════════════════
+  // TOAST
+  //════════════════════════════════════
   .toast#cart-toast(style="display:none")
+
     .toast-content
-      span.toast-icon ✓
+
+      span.toast-icon
+        i.fa-solid.fa-circle-check
+
       span.toast-message تمت الإضافة للسلة
+
+  //════════════════════════════════════
+  // EXTRA STYLE
+  //════════════════════════════════════
+  style.
+    .hidden-product{
+      display:none !important;
+    }
+    .product-card{
+      display:flex;
+      flex-direction:column;
+    }
+    .product-card-body{
+      display:block !important;
+      visibility:visible !important;
+      opacity:1 !important;
+    }
+    .product-card:not(.hidden-product) .product-card-body{
+      display:block !important;
+      visibility:visible !important;
+      opacity:1 !important;
+    }
+    .product-card:not(.hidden-product){
+      display:flex !important;
+    }
 
   //════════════════════════════════════
   // SCRIPT
   //════════════════════════════════════
   script.
     const CART_KEY = 'cart';
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const sortSelect = document.querySelector('#sort-select');
-    const grid = document.querySelector('.products-grid');
-    const toast = document.getElementById("cart-toast");
+
+    const filterButtons =
+      document.querySelectorAll('.filter-btn');
+
+    const sortSelect =
+      document.querySelector('#sort-select');
+
+    const grid =
+      document.querySelector('.products-grid');
+
+    const toast =
+      document.getElementById("cart-toast");
 
     // ==================== TOAST ====================
 
     function showToast(message) {
-      const msgEl = toast.querySelector('.toast-message');
-      if (msgEl) msgEl.textContent = message;
+
+      const msgEl =
+        toast.querySelector('.toast-message');
+
+      if (msgEl) {
+        msgEl.textContent = message;
+      }
 
       toast.style.display = 'flex';
-      // force reflow
+
       void toast.offsetWidth;
+
       toast.classList.add('show');
 
       setTimeout(() => {
+
         toast.classList.remove('show');
+
         setTimeout(() => {
           toast.style.display = 'none';
         }, 300);
+
       }, 2000);
     }
 
-    // ==================== CART FUNCTIONS ====================
+    // ==================== CART ====================
 
     function getCart() {
+
       try {
-        const stored = localStorage.getItem(CART_KEY);
-        const parsed = stored ? JSON.parse(stored) : [];
-        return Array.isArray(parsed) ? parsed : [];
+
+        const stored =
+          localStorage.getItem(CART_KEY);
+
+        const parsed =
+          stored ? JSON.parse(stored) : [];
+
+        return Array.isArray(parsed)
+          ? parsed
+          : [];
+
       } catch (err) {
+
         return [];
       }
     }
 
     function saveCart(cart) {
-      localStorage.setItem(CART_KEY, JSON.stringify(cart));
+
+      localStorage.setItem(
+        CART_KEY,
+        JSON.stringify(cart)
+      );
+
       updateCartBadge();
     }
 
     function updateCartBadge() {
+
       const cart = getCart();
-      const totalQty = cart.reduce((sum, item) => sum + Number(item.qty || 1), 0);
-      const badge = document.querySelector('.cart-count');
+
+      const totalQty = cart.reduce((sum, item) => {
+        return sum + Number(item.qty || 1);
+      }, 0);
+
+      const badge =
+        document.querySelector('.cart-count');
 
       if (badge) {
+
         badge.textContent = totalQty;
-        badge.classList.toggle('has-items', totalQty > 0);
+
+        badge.classList.toggle(
+          'has-items',
+          totalQty > 0
+        );
       }
     }
 
     function addToCart(productData) {
+
       const cart = getCart();
 
-      const existingIndex = cart.findIndex(item =>
-        String(item.id || item._id) === String(productData.id)
-      );
+      const existingIndex = cart.findIndex(item => {
+
+        return String(item.id || item._id)
+          === String(productData.id);
+
+      });
 
       if (existingIndex >= 0) {
-        cart[existingIndex].qty = (cart[existingIndex].qty || 1) + 1;
+
+        cart[existingIndex].qty =
+          (cart[existingIndex].qty || 1) + 1;
+
       } else {
+
         cart.push({
           id: String(productData.id),
           name: productData.name,
@@ -170,92 +298,162 @@ block content
       }
 
       saveCart(cart);
+
       showToast('تمت الإضافة للسلة بنجاح');
     }
 
     // ==================== FILTER ====================
 
     filterButtons.forEach(btn => {
+
       btn.addEventListener('click', () => {
-        filterButtons.forEach(b => b.classList.remove('active'));
+
+        filterButtons.forEach(b => {
+          b.classList.remove('active');
+        });
+
         btn.classList.add('active');
 
-        const filter = btn.dataset.filter;
-        const cards = document.querySelectorAll('.product-card');
+        const filter =
+          String(btn.dataset.filter || '').trim();
+
+        const cards =
+          document.querySelectorAll('.product-card');
 
         cards.forEach(card => {
-          const category = card.dataset.category;
 
-          if (filter === 'all' || category === filter) {
-            card.style.display = 'block';
+          const category =
+            String(card.dataset.category || '').trim();
+
+          if (
+            filter === 'all' ||
+            category === filter
+          ) {
+
+            card.classList.remove('hidden-product');
+            card.style.display = 'flex';
+
           } else {
+
+            card.classList.add('hidden-product');
             card.style.display = 'none';
+
           }
+
         });
+
       });
+
     });
 
     // ==================== SORT ====================
 
     function sortCards(type) {
-      const cards = Array.from(document.querySelectorAll('.product-card'));
+
+      const cards = Array.from(
+        document.querySelectorAll('.product-card')
+      );
 
       cards.sort((a, b) => {
-        const priceA = Number(a.dataset.price);
-        const priceB = Number(b.dataset.price);
 
-        const discountA = Number(a.dataset.discount || 0);
-        const discountB = Number(b.dataset.discount || 0);
+        const priceA =
+          Number(a.dataset.price);
 
-        const dateA = new Date(a.dataset.date);
-        const dateB = new Date(b.dataset.date);
+        const priceB =
+          Number(b.dataset.price);
 
-        if (type === "price-asc") return priceA - priceB;
-        if (type === "price-desc") return priceB - priceA;
-        if (type === "newest") return dateB - dateA;
-        if (type === "discount") return discountB - discountA;
+        const discountA =
+          Number(a.dataset.discount || 0);
+
+        const discountB =
+          Number(b.dataset.discount || 0);
+
+        const dateA =
+          new Date(a.dataset.date);
+
+        const dateB =
+          new Date(b.dataset.date);
+
+        if (type === 'price-asc') {
+          return priceA - priceB;
+        }
+
+        if (type === 'price-desc') {
+          return priceB - priceA;
+        }
+
+        if (type === 'newest') {
+          return dateB - dateA;
+        }
+
+        if (type === 'discount') {
+          return discountB - discountA;
+        }
 
         return 0;
       });
 
-      cards.forEach(card => grid.appendChild(card));
+      cards.forEach(card => {
+        grid.appendChild(card);
+      });
     }
 
-    sortSelect?.addEventListener('change', (e) => {
-      sortCards(e.target.value);
-    });
+    sortSelect?.addEventListener(
+      'change',
+      (e) => {
+        sortCards(e.target.value);
+      }
+    );
 
     // ==================== ADD TO CART ====================
 
-    document.querySelectorAll('.add-to-cart').forEach(btn => {
-      btn.addEventListener('click', function(e) {
-        e.preventDefault();
+    document.querySelectorAll('.add-to-cart')
+      .forEach(btn => {
 
-        const product = {
-          id: this.dataset.id,
-          name: this.dataset.name,
-          price: this.dataset.price,
-          image: this.dataset.image,
-          category: this.dataset.category
-        };
+        btn.addEventListener(
+          'click',
+          function(e) {
 
-        addToCart(product);
+            e.preventDefault();
 
-        // ✅ تغيير حالة الزر مؤقتاً
-        const originalText = this.innerHTML;
-        this.innerHTML = "تمت الإضافة ✓";
-        this.disabled = true;
-        this.classList.add('added');
+            const product = {
+              id: this.dataset.id,
+              name: this.dataset.name,
+              price: this.dataset.price,
+              image: this.dataset.image,
+              category: this.dataset.category
+            };
 
-        setTimeout(() => {
-          this.innerHTML = originalText;
-          this.disabled = false;
-          this.classList.remove('added');
-        }, 1500);
+            addToCart(product);
+
+            const originalText =
+              this.innerHTML;
+
+            this.innerHTML =
+              '<i class="fa-solid fa-check"></i> تمت الإضافة';
+
+            this.disabled = true;
+
+            this.classList.add('added');
+
+            setTimeout(() => {
+
+              this.innerHTML =
+                originalText;
+
+              this.disabled = false;
+
+              this.classList.remove('added');
+
+            }, 1500);
+
+          }
+        );
+
       });
-    });
 
     // ==================== INIT ====================
 
-    sortCards("price-asc");
+    sortCards('price-asc');
+
     updateCartBadge();
