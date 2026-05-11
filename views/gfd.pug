@@ -1,0 +1,340 @@
+extends base
+
+block content
+  section.product-page
+    .container
+      .product-layout
+
+        - const allImages = [item.image, ...(Array.isArray(item.images) ? item.images : [])].filter(Boolean)
+
+        .product-gallery
+          .main-image-wrap
+            img.main-product-image(
+              src=allImages[0] || item.image
+              alt=item.name
+              id='mainProductImage'
+            )
+
+          .product-thumbnails
+            each img, i in allImages
+              button.thumb-btn(
+                type='button'
+                data-src=img
+                class=i === 0 ? 'active' : ''
+              )
+                img(
+                  src=img
+                  alt=`${item.name} - صورة ${i + 1}`
+                )
+
+        .product-details
+          span.product-category= item.category
+
+          h1.product-title= item.name
+
+          if item.name_en
+            p.product-title-en= item.name_en
+
+          .product-price-box
+            span.current-price #{item.price} جنيه
+
+            if item.oldPrice
+              span.old-price #{item.oldPrice} جنيه
+
+          if item.description
+            p.product-description= item.description
+
+          .product-actions
+            button.btn.btn-primary.add-to-cart(
+              type='button'
+              data-id=item._id
+              data-name=item.name
+              data-price=item.price
+              data-image=item.image
+              data-category=item.category
+            )
+              | إضافة إلى السلة
+
+            a.btn.btn-outline(href='/products')
+              | رجوع للمنتجات
+
+  // Toast Message
+  .cart-toast#cartToast
+    span.toast-icon ✓
+    span.toast-text تمت إضافة المنتج إلى السلة
+
+  style.
+    /* ===== GALLERY ===== */
+    .product-layout {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+    }
+
+    .product-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .main-image-wrap {
+      border-radius: 14px;
+      overflow: hidden;
+      background: #f8f8f8;
+      width: 100%;
+    }
+
+    .main-product-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      transition: opacity .22s ease;
+    }
+
+    .main-product-image.fade {
+      opacity: 0;
+    }
+
+    /* Thumbnails افقي تحت الصورة الكبيرة */
+    .product-thumbnails {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .thumb-btn {
+      width: 72px;
+      height: 72px;
+      border-radius: 10px;
+      border: 2px solid transparent;
+      background: #f5f5f5;
+      padding: 3px;
+      cursor: pointer;
+      transition: border-color .2s ease, transform .15s ease, box-shadow .2s ease;
+      overflow: hidden;
+      outline: none;
+      flex-shrink: 0;
+    }
+
+    .thumb-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 7px;
+      display: block;
+    }
+
+    .thumb-btn:hover {
+      border-color: #aaa;
+      transform: scale(1.04);
+    }
+
+    .thumb-btn.active {
+      border-color: var(--primary, #2563eb);
+      box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+    }
+
+    /* إخفاء التمبنيلز لو صورة وحدة بس */
+    .product-thumbnails:empty,
+    .product-thumbnails:has(.thumb-btn:only-child) {
+      display: none;
+    }
+
+    /* ===== PRODUCT DETAILS ===== */
+    .product-details {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* ===== TOAST ===== */
+    .cart-toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #00d74f;
+      color: #fff;
+      padding: 14px 22px;
+      border-radius: 12px;
+      display: flex;
+      gap: 10px;
+      opacity: 0;
+      visibility: hidden;
+      transition: .3s ease;
+      z-index: 9999;
+      white-space: nowrap;
+    }
+
+    .cart-toast.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 768px) {
+      .product-layout {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .product-gallery {
+        width: 100%;
+      }
+
+      .main-image-wrap {
+        border-radius: 12px;
+        max-height: 320px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .main-product-image {
+        max-height: 320px;
+        object-fit: contain;
+      }
+
+      .thumb-btn {
+        width: 60px;
+        height: 60px;
+      }
+
+      .product-details {
+        width: 100%;
+        padding: 0;
+      }
+
+      .product-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .product-actions .btn {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+      }
+
+      .cart-toast {
+        width: 90%;
+        justify-content: center;
+      }
+    }
+
+  if ProCat.length
+    section.related-products
+      .container
+        h2.section-title منتجات من نفس الفئة
+
+        .slider-wrapper
+          button.slider-arrow.prev(type='button') ‹
+
+          .slider-track
+            each pro in ProCat
+              .product-card
+                a.product-card-img(href=`/products/${pro.slug}`)
+                  img(src=pro.image alt=pro.name)
+
+                .product-card-body
+                  span.product-cat= pro.category
+                  h3.product-name= pro.name
+
+                  .product-price-row
+                    span.product-price #{pro.price} جنيه
+
+                  a.btn.btn-outline.btn-full(href=`/products/${pro.slug}`)
+                    | عرض المنتج
+
+          button.slider-arrow.next(type='button') ›
+
+  script.
+    const CART_KEY = 'cart';
+    const cartBtn  = document.querySelector('.add-to-cart');
+    const toast    = document.getElementById('cartToast');
+    const mainImg  = document.getElementById('mainProductImage');
+
+    /* ===== THUMBNAIL CLICK → CHANGE MAIN IMAGE ===== */
+    document.querySelectorAll('.thumb-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const newSrc = btn.dataset.src;
+        if (!newSrc || !mainImg) return;
+
+        // fade out
+        mainImg.classList.add('fade');
+
+        setTimeout(() => {
+          mainImg.src = newSrc;
+          mainImg.onload = () => mainImg.classList.remove('fade');
+          // fallback لو الصورة محملة بالفعل
+          if (mainImg.complete) mainImg.classList.remove('fade');
+        }, 200);
+
+        // active state
+        document.querySelectorAll('.thumb-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    /* ===== CART ===== */
+    function getCart() {
+      try {
+        const data = JSON.parse(localStorage.getItem(CART_KEY));
+        return Array.isArray(data) ? data : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveCart(cart) {
+      localStorage.setItem(CART_KEY, JSON.stringify(cart));
+      updateCartBadge();
+    }
+
+    function updateCartBadge() {
+      const cart  = getCart();
+      const badge = document.querySelector('.cart-count');
+      if (!badge) return;
+      const total = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+      badge.textContent = total;
+      badge.classList.toggle('has-items', total > 0);
+    }
+
+    function showToast(msg) {
+      if (!toast) return;
+      toast.querySelector('.toast-text').textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(window.toastTimer);
+      window.toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
+    }
+
+    if (cartBtn) {
+      cartBtn.addEventListener('click', () => {
+        const product = {
+          id:       String(cartBtn.dataset.id),
+          name:     cartBtn.dataset.name,
+          price:    Number(cartBtn.dataset.price),
+          image:    cartBtn.dataset.image,
+          category: cartBtn.dataset.category,
+          qty:      1
+        };
+
+        const cart     = getCart();
+        const existing = cart.find(i => i.id === product.id);
+
+        if (existing) {
+          existing.qty += 1;
+        } else {
+          cart.push(product);
+        }
+
+        saveCart(cart);
+        showToast('تمت إضافة المنتج إلى السلة');
+      });
+    }
+
+    updateCartBadge();

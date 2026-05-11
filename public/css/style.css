@@ -1650,7 +1650,11 @@ button {
   width: 100%;
   margin-top: var(--sp-sm);
 }
-
+.product-card-img img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
 /* ─── OFFER BANNER ───────────────────────────── */
 .offer-section { background: var(--color-dark); }
 

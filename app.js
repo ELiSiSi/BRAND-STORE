@@ -19,6 +19,7 @@ import orderRouter from './routes/orderRouter.js';
 import viewRouter from './routes/viewRouter.js';
 import reviewRouter    from './routes/reviewRouter.js';
 import AppError from './utils/appError.js';
+import { connectDB } from './utils/mongoose.js';
 
 const MONGO_URI = process.env.MONGO_URI;
 const app = express();
@@ -29,8 +30,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 console.log('🔍 VIEWS DIR =', app.get('views'));
 
-app.use(express.urlencoded({ extended: true, limit: '10kb' }));
-app.use(express.json());
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+app.use(express.json({ limit: '50mb' }));
 app.use(express.static(`${__dirname}/public`));
 
 //-----------------------------------------------------------------------------------------
@@ -76,7 +77,6 @@ console.log('VIEWS PATH 👉', app.get('views'));
 
 // تحميل أسرع للصفحات استهلاك إنترنت أقل
 app.use(compression());
-import { connectDB } from './utils/mongoose.js';
 
 app.use(async (req, res, next) => {
   await connectDB();

@@ -38,6 +38,7 @@ export const productspage = async (req, res, next) => {
 export const itemPage = async (req, res, next) => {
   try {
     const item = await Product.findOne({ slug: req.params.slug });
+    const products = await Product.find();
 
     if (!item) {
       return next(new AppError('المنتج غير موجود', 404));
@@ -57,6 +58,7 @@ export const itemPage = async (req, res, next) => {
     res.status(200).render('item', {
       item,
       ProCat,
+      products,
       title: item.name,
     });
   } catch (err) {
@@ -68,11 +70,13 @@ export const itemPage = async (req, res, next) => {
  export const offersPage = async (req, res, next) => {
   try {
     const offers = await Offer.find();
+    const products = await Product.find();
 
 
     res.status(200).render('offers', {
       offersList: offers,
       title: 'Offers',
+
     });
   } catch (err) {
     console.error('❌ Error:', err);
@@ -84,8 +88,11 @@ export const itemPage = async (req, res, next) => {
 // cartpage -----------------------------------------------------------------------------------
 export const cartpage = async (req, res, next) => {
   try {
+        const products = await Product.find();
+
      res.status(200).render('cart', {
        title: 'Cart',
+        products,
     });
   } catch (err) {
     return next(new AppError('No document found with that ID', 404));
