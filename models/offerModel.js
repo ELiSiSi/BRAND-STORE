@@ -5,7 +5,7 @@ const offerSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, 'Offer must have a name'],
+      required: [true, 'يجب أن يحتوي العرض على اسم'],
       trim: true,
       unique: true,
       index: true,
@@ -22,11 +22,11 @@ const offerSchema = new mongoose.Schema(
     },
     price: {
       type: Number,
-      required: [true, 'Meal must have a price'],
+      required: [true, 'يجب أن يحتوي العرض على سعر'],
     },
     newprice: {
       type: Number,
-      required: [true, 'Offer must have a new price'],
+      required: [true, 'يجب أن يحتوي العرض على سعر جديد'],
     },
     image: {
       type: String,

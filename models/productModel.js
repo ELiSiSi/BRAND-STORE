@@ -5,9 +5,9 @@ const productSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, 'Product must have a name'],
+      required: [true, 'يجب أن يحتوي المنتج على اسم'],
       trim: true,
-      unique: [true, 'Product name must be unique'],
+      unique: [true, 'اسم المنتج يجب أن يكون فريداً'],
       index: true,
     },
     slug: {
@@ -22,11 +22,11 @@ const productSchema = new mongoose.Schema(
     },
     price: {
       type: Number,
-      required: [true, 'Product must have a price'],
+      required: [true, 'يجب أن يحتوي المنتج على سعر'],
     },
     image: {
       type: String,
-      required: true,
+      required: [true, 'يجب أن يحتوي المنتج على صورة'],
     },
     images: {
       type: [String],
@@ -34,7 +34,7 @@ const productSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      required: [true, 'Product must have a category'],
+      required: [true, 'يجب أن يحتوي المنتج على فئة'],
       trim: true,
     },
   },
